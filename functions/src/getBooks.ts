@@ -23,7 +23,12 @@ export const getBooks = onRequest(async (req, res) => {
 			return data;
 		});
 
-		res.status(200).send(books);
+		const responseHeaders = {
+			'Content-Type': 'application/json',
+			'Cache-Control': 'public, max-age=3600, s-maxage=3600'
+		};
+
+		res.status(200).header(responseHeaders).send(books);
 	} catch (e) {
 		if (e instanceof Error) {
 			res.status(500).send(e.message);
