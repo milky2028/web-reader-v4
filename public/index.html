@@ -9,8 +9,6 @@
     <script type="module">
       const response = await fetch("/api/getPage", {
         body: {},
-        method: "POST",
-        headers: { "Content-Type": "text/plain" },
       });
 
       console.log(await response.text());
