@@ -9,7 +9,7 @@ export const getPage = onRequest(async (req: Request, res) => {
 	const { authorization } = req.headers;
 	if (!book || !cover || !authorization) {
 		res
-			.status(500)
+			.status(400)
 			.send(`Missing request parameters. Book: ${book}, Cover: ${cover}, Auth: ${authorization}`);
 		return;
 	}
