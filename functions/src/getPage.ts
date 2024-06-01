@@ -4,13 +4,13 @@ import { auth } from './auth';
 import { app } from './app';
 import { type Request } from 'express';
 
-export const getPage = onRequest(async (req: Request<{ book?: string; cover?: string }>, res) => {
-	const { book, cover } = req.body;
+export const getPage = onRequest(async (req: Request, res) => {
+	const { book, cover } = req.query;
 	const authHeader = req.headers.authorization;
 	if (!book || !cover || !authHeader) {
 		res
 			.status(500)
-			.send(`Missing request paremeters. Book: ${book}, Cover: ${cover}, Auth: ${authHeader}`);
+			.send(`Missing request parameters. Book: ${book}, Cover: ${cover}, Auth: ${authHeader}`);
 		return;
 	}
 
