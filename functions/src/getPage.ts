@@ -1,3 +1,5 @@
-import { CallableRequest } from "firebase-functions/v2/https";
+import { onRequest } from "firebase-functions/v2/https";
 
-export async function getPage(request: CallableRequest) {}
+export const getPage = onRequest(async (_req, res) => {
+  res.status(200).send("It works?");
+});
