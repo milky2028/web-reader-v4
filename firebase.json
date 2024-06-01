@@ -29,6 +29,10 @@
         "function": "getPage"
       },
       {
+        "source": "/api/getBooks",
+        "function": "getBooks"
+      },
+      {
         "source": "**",
         "destination": "/index.html"
       }
