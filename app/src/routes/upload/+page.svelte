@@ -46,7 +46,8 @@
 			return bookName;
 		});
 
-		console.log(extractions);
+		const wasm = await import('$lib/wasm').then(({ wasm }) => wasm);
+		console.log(wasm);
 	}
 </script>
 
