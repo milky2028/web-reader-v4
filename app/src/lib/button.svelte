@@ -1,5 +1,16 @@
+<script lang="ts">
+	const {
+		type = 'button',
+		label,
+		...rest
+	} = $props<{ type?: 'button' | 'submit'; label: string }>();
+</script>
+
 <style>
-	button {
+	button,
+	input {
+		display: block;
+		text-align: center;
 		cursor: pointer;
 		font-size: 1rem;
 		padding: 0.25rem 1rem;
@@ -18,4 +29,8 @@
 	}
 </style>
 
-<button {...$$restProps}><slot /></button>
+{#if type === 'button'}
+	<button {...rest}>{label}</button>
+{:else}
+	<input {...rest} value={label} style="width: {label.length + 2}ch" />
+{/if}
