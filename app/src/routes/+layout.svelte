@@ -76,7 +76,7 @@
 		padding: 2.5rem;
 		border-radius: 3rem;
 		box-shadow: 0 0 2rem 0 rgba(0, 0, 0, 0.1);
-		background-color: rgb(235, 235, 235);
+		background-color: white;
 
 		@media (prefers-color-scheme: dark) {
 			background-color: rgb(15, 15, 15);
