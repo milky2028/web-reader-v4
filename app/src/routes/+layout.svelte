@@ -1,18 +1,30 @@
 <script>
 	import Divider from '$lib/divider.svelte';
 	import Title from '$lib/title.svelte';
+	import UnstyledButton from '$lib/unstyled-button.svelte';
 </script>
 
 <style>
-	.outer-container {
+	.app-container {
 		display: grid;
 		grid-template: 'menu main';
 		grid-template-columns: 20rem 1fr;
 		height: 100%;
+
+		& :global(.arrow) {
+			justify-self: end;
+			transform: rotate(180deg);
+
+			@media (prefers-color-scheme: dark) {
+				filter: invert();
+			}
+		}
 	}
 
 	.menu-wrapper {
-		padding: 2.5rem;
+		display: grid;
+		grid-template-rows: min-content min-content 1fr 4rem;
+		padding: 4rem 0 3rem 2.5rem;
 	}
 
 	.app-title {
@@ -28,6 +40,12 @@
 		}
 	}
 
+	menu {
+		list-style: none;
+		margin: 0;
+		padding-left: 1rem;
+	}
+
 	main {
 		margin: 2.5rem;
 		padding: 2.5rem;
@@ -39,15 +57,9 @@
 			background-color: rgb(15, 15, 15);
 		}
 	}
-
-	menu {
-		list-style: none;
-		margin: 0;
-		padding-left: 1rem;
-	}
 </style>
 
-<section class="outer-container">
+<section class="app-container">
 	<section class="menu-wrapper">
 		<a class="app-title" href="/">
 			<img src="/reader-180x180.png" alt="Comic Reader application icon" />
@@ -67,6 +79,7 @@
 			<li>Route 3</li>
 			<li>Route 4</li>
 		</menu>
+		<UnstyledButton class="arrow"><img src="/forward.svg" alt="Arrow icon" /></UnstyledButton>
 	</section>
 	<main><slot /></main>
 </section>
