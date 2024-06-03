@@ -13,6 +13,41 @@
 		// both
 		'application/octet-stream'
 	];
+
+	function onDragover(event: DragEvent) {
+		event.preventDefault();
+
+		if (event.dataTransfer) {
+			event.dataTransfer.dropEffect = 'copy';
+		}
+	}
+
+	function getFiles(event: DragEvent | (Event & { currentTarget: HTMLInputElement })) {
+		const files =
+			event instanceof DragEvent ? event.dataTransfer?.files : event.currentTarget.files;
+		return Array.from(files ?? []).filter((file) => file.name.match(/.cbr|.cbz|.rar|.zip$/));
+	}
+
+	const ONE_GIBIBYTE = 1024 * 1024 * 1024;
+	async function upload(files: File[]) {
+		const totalUploadSize = files.reduce((acc, curr) => acc + curr.size, 0);
+
+		const { quota = 0 } = await navigator.storage.estimate();
+		if (totalUploadSize > ONE_GIBIBYTE * 10) {
+			await navigator.storage.persist();
+		}
+
+		if (totalUploadSize > quota) {
+			throw new Error('Insufficient disk space to upload file.');
+		}
+
+		const extractions = files.map((file) => {
+			const bookName = file.name.slice(0, file.name.length - 4);
+			return bookName;
+		});
+
+		console.log(extractions);
+	}
 </script>
 
 <style>
@@ -57,8 +92,13 @@
 </style>
 
 <div class="container">
-	<div role="button" tabindex="0" class="drop-zone">
+	<div role="button" tabindex="0" class="drop-zone" on:dragover={onDragover}>
 		<div class="drag-message-container"><h2>Drag and drop or click to upload a book</h2></div>
-		<input type="file" accept={acceptedFileTypes.join()} multiple />
+		<input
+			type="file"
+			accept={acceptedFileTypes.join()}
+			multiple
+			on:change={(event) => upload(getFiles(event))}
+		/>
 	</div>
 </div>
