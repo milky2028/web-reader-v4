@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "description": "Fourth iteration of my comic reader app.",
   "scripts": {
-    "clean": "rm -rf node_modules ./functions/node_modules ./app/node_modules"
+    "clean": "rm -rf node_modules ./functions/node_modules ./app/node_modules",
+    "setup": "pnpm install && cd functions && pnpm install && cd ../app && pnpm install"
   },
   "keywords": [
     "wasm",
@@ -21,5 +22,8 @@
   ],
   "author": "Tyler Gross",
   "license": "MIT",
-  "private": true
+  "private": true,
+  "devDependencies": {
+    "firebase-tools": "^13.10.2"
+  }
 }
