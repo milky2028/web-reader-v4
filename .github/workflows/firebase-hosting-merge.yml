@@ -18,10 +18,5 @@ jobs:
         with:
           version: 9
 
-      - run: npm run deploy
-      - uses: FirebaseExtended/action-hosting-deploy@v0
-        with:
-          repoToken: ${{ secrets.GITHUB_TOKEN }}
-          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_WEB_READER_AE90F }}
-          channelId: live
-          projectId: web-reader-ae90f
+      - name: Deploy to Firebase
+        run: npm run deploy -- ${{ secrets.FIREBASE_CI_TOKEN }}
