@@ -1,4 +1,7 @@
 <script lang="ts">
+	import { allocateFileStreaming } from '$lib/allocateFileStreaming';
+	import { readArchiveEntries } from '$lib/readArchiveEntries';
+
 	const acceptedFileTypes = [
 		// zip
 		'.cbz',
@@ -41,13 +44,20 @@
 			throw new Error('Insufficient disk space to upload file.');
 		}
 
-		const extractions = files.map((file) => {
+		const wasm = await import('$lib/wasm').then(({ wasm }) => wasm);
+		const extractions = files.map(async (file) => {
 			const bookName = file.name.slice(0, file.name.length - 4);
+			const allocatedFile = await allocateFileStreaming(file);
+
+			for (const entry of readArchiveEntries({ file: allocatedFile, wasm, extractData: true })) {
+				console.log(entry.file);
+			}
+
+			allocatedFile.free();
 			return bookName;
 		});
 
-		const wasm = await import('$lib/wasm').then(({ wasm }) => wasm);
-		console.log(wasm);
+		await Promise.all(extractions);
 	}
 </script>
 

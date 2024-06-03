@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       extract-zip-rar:
-        specifier: ^0.10.0
-        version: 0.10.0
+        specifier: ^0.10.1
+        version: 0.10.1
     devDependencies:
       '@sveltejs/adapter-auto':
         specifier: ^3.0.0
@@ -675,8 +675,8 @@ packages:
     resolution: {integrity: sha512-kVscqXk4OCp68SZ0dkgEKVi6/8ij300KBWTJq32P/dYeWTSwK41WyTxalN1eRmA5Z9UU/LX9D7FWSmV9SAYx6g==}
     engines: {node: '>=0.10.0'}
 
-  extract-zip-rar@0.10.0:
-    resolution: {integrity: sha512-drqI2rhulM1fMsWR+RtzCpW9Cnty26y4o5m/zNRg4iCEL1jbfqheR25Q7btQoEc7dhqpQPxJamB42OcVl+q1xw==}
+  extract-zip-rar@0.10.1:
+    resolution: {integrity: sha512-ajgg4aLfFbJbYM1W+0VK92dym5iBxWFhLbXTJVr9G2uSqge06vE0R6O2eFSG+A+dXgxC2gPMEXeM5hhZvYLPTw==}
 
   fast-deep-equal@3.1.3:
     resolution: {integrity: sha512-f3qQ9oQy9j2AhBe/H9VC91wLmKBCCU/gDOnKNAYG5hswO7BLKj09Hc5HYNz9cGI++xlpDCIgDaitVs03ATR84Q==}
@@ -1840,7 +1840,7 @@ snapshots:
 
   esutils@2.0.3: {}
 
-  extract-zip-rar@0.10.0: {}
+  extract-zip-rar@0.10.1: {}
 
   fast-deep-equal@3.1.3: {}
 
