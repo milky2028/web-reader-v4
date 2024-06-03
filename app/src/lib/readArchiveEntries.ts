@@ -26,6 +26,9 @@ export function* readArchiveEntries({ file, wasm, extractData = false }: ReadArc
 	} = wasm;
 
 	const archivePtr = open_archive(file.ptr, file.size);
+	if (archivePtr === ENTRY_ERROR) {
+		throw new Error('Unable to open archive.');
+	}
 
 	for (;;) {
 		const entryPtr = get_next_entry(archivePtr);
