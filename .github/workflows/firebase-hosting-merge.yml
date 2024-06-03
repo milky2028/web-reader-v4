@@ -19,4 +19,4 @@ jobs:
           version: 9
 
       - name: Deploy to Firebase
-        run: npm run deploy -- ${{ secrets.FIREBASE_CI_TOKEN }}
+        run: npm run deploy -- --token ${{ secrets.FIREBASE_CI_TOKEN }}
