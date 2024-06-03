@@ -2,6 +2,21 @@
 	import Divider from '$lib/divider.svelte';
 	import Title from '$lib/title.svelte';
 	import UnstyledButton from '$lib/unstyled-button.svelte';
+
+	const routes = [
+		{
+			name: 'Read',
+			href: '/'
+		},
+		{
+			name: 'Upload',
+			href: '/upload'
+		},
+		{
+			name: 'Log In',
+			href: '/login'
+		}
+	];
 </script>
 
 <style>
@@ -32,7 +47,6 @@
 		grid-template-columns: 2rem 1fr;
 		align-items: center;
 		column-gap: 0.75rem;
-		text-decoration: none;
 
 		& img {
 			max-width: 2rem;
@@ -44,6 +58,16 @@
 		list-style: none;
 		margin: 0;
 		padding-left: 1rem;
+
+		& li {
+			font-size: 1rem;
+		}
+
+		& a {
+			display: block;
+			padding: 0.5rem 0;
+			width: 100%;
+		}
 	}
 
 	main {
@@ -67,17 +91,9 @@
 		</a>
 		<Divider />
 		<menu>
-			<style>
-				li {
-					font-size: 1rem;
-					padding-bottom: 0.5rem;
-				}
-			</style>
-
-			<li>Route 1</li>
-			<li>Route 2</li>
-			<li>Route 3</li>
-			<li>Route 4</li>
+			{#each routes as route (route.name)}
+				<li><a href={route.href}>{route.name}</a></li>
+			{/each}
 		</menu>
 		<UnstyledButton class="arrow"><img src="/forward.svg" alt="Arrow icon" /></UnstyledButton>
 	</section>
