@@ -2,10 +2,9 @@
   "name": "web-reader-v4",
   "version": "0.1.0",
   "description": "Fourth iteration of my comic reader app.",
-  "workspaces": [
-    "./functions",
-    "./app"
-  ],
+  "scripts": {
+    "clean": "rm -rf node_modules ./functions/node_modules ./app/node_modules"
+  },
   "keywords": [
     "wasm",
     "comic",
