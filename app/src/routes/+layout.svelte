@@ -15,6 +15,19 @@
 		padding: 2.5rem;
 	}
 
+	.app-title {
+		display: grid;
+		grid-template-columns: 2rem 1fr;
+		align-items: center;
+		column-gap: 0.75rem;
+		text-decoration: none;
+
+		& img {
+			max-width: 2rem;
+			border-radius: 0.25rem;
+		}
+	}
+
 	main {
 		margin: 2.5rem;
 		padding: 2.5rem;
@@ -36,7 +49,10 @@
 
 <section class="outer-container">
 	<section class="menu-wrapper">
-		<Title>Comic Reader</Title>
+		<a class="app-title" href="/">
+			<img src="/reader-180x180.png" alt="Comic Reader application icon" />
+			<Title>Comic Reader</Title>
+		</a>
 		<Divider />
 		<menu>
 			<style>

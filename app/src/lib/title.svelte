@@ -1,7 +1,7 @@
 <style>
 	h1 {
 		font-size: 1.75rem;
-		margin: 1rem 0;
+		margin: 0;
 	}
 </style>
 
