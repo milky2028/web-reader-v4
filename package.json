@@ -4,7 +4,8 @@
   "description": "Fourth iteration of my comic reader app.",
   "scripts": {
     "clean": "rm -rf node_modules ./functions/node_modules ./app/node_modules",
-    "setup": "pnpm install && cd functions && pnpm install && cd ../app && pnpm install"
+    "setup": "pnpm install && cd functions && pnpm install && cd ../app && pnpm install",
+    "deploy": "npm run clean && npm run setup && cd functions && npm run build && cd ../app && npm run build && firebase deploy"
   },
   "keywords": [
     "wasm",
