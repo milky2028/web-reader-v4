@@ -1,0 +1,21 @@
+{
+  "name": "web-reader-v4",
+  "version": "0.1.0",
+  "description": "Fourth iteration of my comic reader app.",
+  "keywords": [
+    "wasm",
+    "comic",
+    "books",
+    "comic",
+    "reader",
+    "cbr",
+    "cbz",
+    "rar",
+    "zip",
+    "typescript",
+    "javascript",
+    "svelte"
+  ],
+  "author": "Tyler Gross",
+  "license": "MIT"
+}
