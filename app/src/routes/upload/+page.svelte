@@ -58,7 +58,7 @@
 
 <div class="container">
 	<div role="button" tabindex="0" class="drop-zone">
-		<div class="drag-message-container"><h2>Drag and Drop or Click to Upload a Book</h2></div>
+		<div class="drag-message-container"><h2>Drag and drop or click to upload a book</h2></div>
 		<input type="file" accept={acceptedFileTypes.join()} multiple />
 	</div>
 </div>
