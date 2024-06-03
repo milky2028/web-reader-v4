@@ -1,8 +1,9 @@
-<script>
+<script lang="ts">
 	import Divider from '$lib/divider.svelte';
 	import Title from '$lib/title.svelte';
 	import UnstyledButton from '$lib/unstyled-button.svelte';
 	import DynamicMenuArea from '$lib/dynamic-menu-area.svelte';
+	import { page } from '$app/stores';
 
 	const routes = [
 		{
@@ -18,6 +19,10 @@
 			href: '/login'
 		}
 	];
+
+	function getTitle(href: string) {
+		return routes.find((page) => page.href === href)?.name;
+	}
 </script>
 
 <style>
@@ -100,5 +105,9 @@
 		<DynamicMenuArea />
 		<UnstyledButton class="arrow"><img src="/forward.svg" alt="Arrow icon" /></UnstyledButton>
 	</section>
-	<main><slot /></main>
+	<main>
+		<Title>{getTitle($page.url.pathname)}</Title>
+		<Divider />
+		<slot />
+	</main>
 </section>
