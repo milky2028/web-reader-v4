@@ -46,7 +46,7 @@ export function* readArchiveEntries({ file, wasm, extractData = false }: ReadArc
 				const size = get_entry_size(entryPtr);
 				const entry_data = read_entry_data(archivePtr, entryPtr);
 				const buffer = get_buffer(entry_data, size);
-				const file = new File([buffer.slice()], fileName, { type: 'application/octet-stream' });
+				const file = new File([buffer], fileName, { type: 'image/jpg' });
 				free_buffer(entry_data);
 
 				yield { fileName, file };
