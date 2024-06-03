@@ -2,6 +2,7 @@
 	import Divider from '$lib/divider.svelte';
 	import Title from '$lib/title.svelte';
 	import UnstyledButton from '$lib/unstyled-button.svelte';
+	import DynamicMenuArea from '$lib/dynamic-menu-area.svelte';
 
 	const routes = [
 		{
@@ -38,7 +39,7 @@
 
 	.menu-wrapper {
 		display: grid;
-		grid-template-rows: min-content min-content 1fr 4rem;
+		grid-template-rows: min-content min-content min-content min-content 1fr 4rem;
 		padding: 4rem 0 3rem 2.5rem;
 	}
 
@@ -95,6 +96,8 @@
 				<li><a href={route.href}>{route.name}</a></li>
 			{/each}
 		</menu>
+		<Divider />
+		<DynamicMenuArea />
 		<UnstyledButton class="arrow"><img src="/forward.svg" alt="Arrow icon" /></UnstyledButton>
 	</section>
 	<main><slot /></main>
