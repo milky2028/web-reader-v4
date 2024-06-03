@@ -1,9 +1,9 @@
-function createMemoryWritable(heap: Uint8Array, startingPtr: number) {
+function createMemoryWritable(wasm: Awaited<typeof import('$lib/wasm').wasm>, startingPtr: number) {
 	let position = startingPtr;
 
 	return new WritableStream<Uint8Array>({
 		write(chunk) {
-			heap.set(chunk, position);
+			wasm.HEAPU8.set(chunk, position);
 			position += chunk.byteLength;
 		}
 	});
@@ -12,7 +12,7 @@ function createMemoryWritable(heap: Uint8Array, startingPtr: number) {
 export async function allocateFileStreaming(file: File) {
 	const wasm = await import('$lib/wasm').then(({ wasm }) => wasm);
 	const ptr = wasm._malloc(file.size);
-	await file.stream().pipeTo(createMemoryWritable(wasm.HEAPU8, ptr));
+	await file.stream().pipeTo(createMemoryWritable(wasm, ptr));
 
 	return {
 		ptr,
