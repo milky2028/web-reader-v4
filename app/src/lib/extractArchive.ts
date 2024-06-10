@@ -4,6 +4,7 @@ type ExtractArchiveParams = {
 	wasm: Awaited<typeof import('$lib/wasm').wasm>;
 	inputArchivePath: string;
 	outputExtractionPath: string;
+	extractData: boolean;
 	onEntry?: (entryName: string) => void;
 };
 
@@ -22,6 +23,7 @@ export function extractArchive({
 	wasm,
 	inputArchivePath,
 	outputExtractionPath,
+	extractData,
 	onEntry
 }: ExtractArchiveParams) {
 	return new Promise<void>((resolve, reject) => {
@@ -36,15 +38,16 @@ export function extractArchive({
 			}
 
 			if (type === 'entry') {
-				onEntry(data);
+				onEntry?.(data);
 			}
 		};
 
 		window.addEventListener(jobId, onEvent);
-		wasm.extract_to_disk(
+		wasm.extract(
 			jobId,
 			createWASMPath(inputArchivePath),
-			createWASMPath(outputExtractionPath)
+			createWASMPath(outputExtractionPath),
+			extractData
 		);
 	});
 }
