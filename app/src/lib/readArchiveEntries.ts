@@ -34,6 +34,7 @@ export function* readArchiveEntries({ file, wasm, extractData = false }: ReadArc
 		const entryPtr = get_next_entry(archivePtr);
 		if (entryPtr === END_OF_FILE || entryPtr === ENTRY_ERROR) {
 			close_archive(archivePtr);
+			file.free();
 			return;
 		}
 
@@ -44,10 +45,10 @@ export function* readArchiveEntries({ file, wasm, extractData = false }: ReadArc
 			const fileName = path.split('/').pop() ?? '';
 			if (extractData) {
 				const size = get_entry_size(entryPtr);
-				const entry_data = read_entry_data(archivePtr, entryPtr);
-				const buffer = get_buffer(entry_data, size);
+				const entryData = read_entry_data(archivePtr, entryPtr);
+				const buffer = get_buffer(entryData, size);
 				const file = new File([buffer], fileName, { type: 'image/jpg' });
-				free_buffer(entry_data);
+				free_buffer(entryData);
 
 				yield { fileName, file };
 			} else {
