@@ -1,8 +1,14 @@
 <script lang="ts">
 	import { extractArchive } from '$lib/extractArchive';
 	import { getPathHandle } from '$lib/file-streams/getPathHandle';
+	import { readFileStream } from '$lib/file-streams/readFileStream';
 	import { writeFileStream } from '$lib/file-streams/writeFileStream';
+	import { storage } from '$lib/firebase/storage';
+	import { getUser } from '$lib/firebase/user.svelte';
 	import { mountWasmFilesystem } from '$lib/mountWasmFilesystem';
+	import { ref, uploadBytes } from 'firebase/storage';
+
+	const user = $derived(getUser());
 
 	const acceptedFileTypes = [
 		// zip
@@ -97,20 +103,24 @@
 				outputExtractionPath
 			});
 
-			const start = performance.now();
 			await extractArchive({
 				wasm: module,
 				inputArchivePath,
 				outputExtractionPath,
 				extractData: true,
-				onEntry: (entry) => {
-					console.log('Entry extracted', entry);
+				onEntry: async (entry) => {
+					if (user) {
+						const file = await readFileStream(`${outputExtractionPath}/${entry}`);
+						if (file) {
+							await uploadBytes(ref(storage, `test/${user.uid}/${bookName}/${entry}`), file);
+						}
+					}
+
 					if (entry === coverName) {
-						console.log('Cover found', performance.now() - start);
+						console.log('Cover found');
 					}
 				}
 			});
-			console.log('Book extracted', performance.now() - start);
 		});
 
 		await Promise.all(extractions);
