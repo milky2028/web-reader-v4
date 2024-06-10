@@ -3,7 +3,7 @@
 		type = 'button',
 		label,
 		...rest
-	} = $props<{ type?: 'button' | 'submit'; label: string }>();
+	} = $props<Partial<HTMLButtonElement> & { type?: 'button' | 'submit'; label: string }>();
 </script>
 
 <style>
@@ -32,5 +32,5 @@
 {#if type === 'button'}
 	<button {...rest}>{label}</button>
 {:else}
-	<input {...rest} value={label} style="width: {label.length + 2}ch" />
+	<input {...rest} value={label} type="submit" style="width: {label.length + 2}ch" />
 {/if}
