@@ -1,4 +1,4 @@
-import type { allocateFileStreaming } from './allocateFileStreaming';
+import type { allocateFileStreaming } from './file-streams/allocateFileStreaming';
 
 type ReadArchiveEntriesParams = {
 	file: Awaited<ReturnType<typeof allocateFileStreaming>>;
