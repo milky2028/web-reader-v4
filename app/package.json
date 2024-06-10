@@ -33,6 +33,7 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"extract-zip-rar": "^0.13.4"
+		"extract-zip-rar": "^0.13.4",
+		"firebase": "^10.12.2"
 	}
 }
