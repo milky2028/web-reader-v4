@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       extract-zip-rar:
-        specifier: ^0.10.2
-        version: 0.10.2
+        specifier: ^0.13.1
+        version: link:../../extract
     devDependencies:
       '@sveltejs/adapter-auto':
         specifier: ^3.0.0
@@ -63,6 +63,9 @@ importers:
       vite:
         specifier: ^5.0.3
         version: 5.2.12
+      vite-plugin-cross-origin-isolation:
+        specifier: ^0.1.6
+        version: 0.1.6
 
 packages:
 
@@ -675,9 +678,6 @@ packages:
     resolution: {integrity: sha512-kVscqXk4OCp68SZ0dkgEKVi6/8ij300KBWTJq32P/dYeWTSwK41WyTxalN1eRmA5Z9UU/LX9D7FWSmV9SAYx6g==}
     engines: {node: '>=0.10.0'}
 
-  extract-zip-rar@0.10.2:
-    resolution: {integrity: sha512-4rYKelQ/qn+DlqU9hWpZUJ9Y73OlO6FGCKMq10qFCgCao990RA3LHfqEPC6K7Kjb15lCo2y5diHOD8nT8TT1PQ==}
-
   fast-deep-equal@3.1.3:
     resolution: {integrity: sha512-f3qQ9oQy9j2AhBe/H9VC91wLmKBCCU/gDOnKNAYG5hswO7BLKj09Hc5HYNz9cGI++xlpDCIgDaitVs03ATR84Q==}
 
@@ -1186,6 +1186,9 @@ packages:
 
   util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
+
+  vite-plugin-cross-origin-isolation@0.1.6:
+    resolution: {integrity: sha512-OY0naW9nPUDrKTffYnY7FRYXOgZdHoNwMGpPxUmj/n32mGZi01fcq+J536jkmwGWX7DLT95XBQVHHbrAJzTvrw==}
 
   vite@5.2.12:
     resolution: {integrity: sha512-/gC8GxzxMK5ntBwb48pR32GGhENnjtY30G4A0jemunsBkiEZFw60s8InGpN8gkhHEkjnRK1aSAxeQgwvFhUHAA==}
@@ -1840,8 +1843,6 @@ snapshots:
 
   esutils@2.0.3: {}
 
-  extract-zip-rar@0.10.2: {}
-
   fast-deep-equal@3.1.3: {}
 
   fast-glob@3.3.2:
@@ -2307,6 +2308,8 @@ snapshots:
       punycode: 2.3.1
 
   util-deprecate@1.0.2: {}
+
+  vite-plugin-cross-origin-isolation@0.1.6: {}
 
   vite@5.2.12:
     dependencies:
