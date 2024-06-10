@@ -112,7 +112,7 @@
 					if (user) {
 						const file = await readFileStream(`${outputExtractionPath}/${entry}`);
 						if (file) {
-							await uploadBytes(ref(storage, `test/${user.uid}/${bookName}/${entry}`), file);
+							await uploadBytes(ref(storage, `${user.uid}/${bookName}/${entry}`), file);
 						}
 					}
 
