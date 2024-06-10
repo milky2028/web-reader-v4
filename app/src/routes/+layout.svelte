@@ -4,8 +4,10 @@
 	import UnstyledButton from '$lib/unstyled-button.svelte';
 	import DynamicMenuArea from '$lib/dynamic-menu-area.svelte';
 	import { page } from '$app/stores';
+	import { getUser } from '$lib/user.svelte';
 
-	const routes = [
+	const user = $derived(getUser());
+	const routes = $derived([
 		{
 			name: 'Read',
 			href: '/'
@@ -15,10 +17,10 @@
 			href: '/upload'
 		},
 		{
-			name: 'Log In',
+			name: user ? 'Sign Out' : 'Log In',
 			href: '/login'
 		}
-	];
+	]);
 
 	function getTitle(href: string) {
 		return routes.find((page) => page.href === href)?.name;
