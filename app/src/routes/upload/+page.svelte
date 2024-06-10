@@ -1,10 +1,8 @@
 <script lang="ts">
 	import { extractArchive } from '$lib/extractArchive';
-	import { allocateFileStreaming } from '$lib/file-streams/allocateFileStreaming';
 	import { getPathHandle } from '$lib/file-streams/getPathHandle';
 	import { writeFileStream } from '$lib/file-streams/writeFileStream';
 	import { mountWasmFilesystem } from '$lib/mountWasmFilesystem';
-	import { readArchiveEntries } from '$lib/readArchiveEntries';
 
 	const acceptedFileTypes = [
 		// zip
