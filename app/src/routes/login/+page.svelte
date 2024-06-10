@@ -1,9 +1,9 @@
 <script lang="ts">
 	import Button from '$lib/button.svelte';
 	import Field from '$lib/field.svelte';
-	import { auth } from '$lib/auth';
+	import { auth } from '$lib/firebase/auth';
 	import { signInWithEmailAndPassword, signOut } from 'firebase/auth';
-	import { getUser } from '$lib/user.svelte';
+	import { getUser } from '$lib/firebase/user.svelte';
 
 	const user = $derived(getUser());
 

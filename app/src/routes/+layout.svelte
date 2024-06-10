@@ -4,7 +4,7 @@
 	import UnstyledButton from '$lib/unstyled-button.svelte';
 	import DynamicMenuArea from '$lib/dynamic-menu-area.svelte';
 	import { page } from '$app/stores';
-	import { getUser } from '$lib/user.svelte';
+	import { getUser } from '$lib/firebase/user.svelte';
 
 	const user = $derived(getUser());
 	const routes = $derived([
