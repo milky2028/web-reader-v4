@@ -19,6 +19,26 @@
 		'application/octet-stream'
 	];
 
+	async function collectEntries({
+		wasm,
+		inputArchivePath,
+		outputExtractionPath
+	}: {
+		wasm: Awaited<typeof import('$lib/wasm').wasm>;
+		inputArchivePath: string;
+		outputExtractionPath: string;
+	}) {
+		const entries: string[] = [];
+		await extractArchive({
+			wasm,
+			inputArchivePath,
+			outputExtractionPath,
+			extractData: false,
+			onEntry: (entryName) => entries.push(entryName)
+		});
+		return entries.sort();
+	}
+
 	function onDragover(event: DragEvent) {
 		event.preventDefault();
 
@@ -35,14 +55,18 @@
 
 	const ONE_GIBIBYTE = 1024 * 1024 * 1024;
 	async function upload(files: File[]) {
-		const totalUploadSize = files.reduce((acc, curr) => acc + curr.size, 0);
+		const filesTooBig = files.some((file) => file.size > 2 * ONE_GIBIBYTE);
+		if (filesTooBig) {
+			throw new Error('Cannot upload files larger than 2GB.');
+		}
 
-		const { quota = 0 } = await navigator.storage.estimate();
-		if (totalUploadSize > ONE_GIBIBYTE * 10) {
+		const totalUploadSize = files.reduce((acc, curr) => acc + curr.size, 0);
+		const { quota = 0, usage = 0 } = await navigator.storage.estimate();
+		if (totalUploadSize + usage > quota) {
 			await navigator.storage.persist();
 		}
 
-		if (totalUploadSize > quota) {
+		if (totalUploadSize + usage > quota) {
 			throw new Error('Insufficient disk space to upload file.');
 		}
 
@@ -67,11 +91,26 @@
 				throw new Error(`Unable to create extraction path: ${outputExtractionPath}`);
 			}
 
-			await extractArchive({
+			const [coverName] = await collectEntries({
 				wasm: module,
 				inputArchivePath,
 				outputExtractionPath
 			});
+
+			const start = performance.now();
+			await extractArchive({
+				wasm: module,
+				inputArchivePath,
+				outputExtractionPath,
+				extractData: true,
+				onEntry: (entry) => {
+					console.log('Entry extracted', entry);
+					if (entry === coverName) {
+						console.log('Cover found', performance.now() - start);
+					}
+				}
+			});
+			console.log('Book extracted', performance.now() - start);
 		});
 
 		await Promise.all(extractions);
