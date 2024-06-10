@@ -1,6 +1,8 @@
 <script lang="ts">
-	import { allocateFileStreaming } from '$lib/allocateFileStreaming';
-	import { readArchiveEntries } from '$lib/readArchiveEntries';
+	import { extractArchive } from '$lib/extractArchive';
+	import { getPathHandle } from '$lib/file-streams/getPathHandle';
+	import { writeFileStream } from '$lib/file-streams/writeFileStream';
+	import { mountWasmFilesystem } from '$lib/mountWasmFilesystem';
 
 	const acceptedFileTypes = [
 		// zip
@@ -44,20 +46,53 @@
 			throw new Error('Insufficient disk space to upload file.');
 		}
 
-		const wasm = await import('$lib/wasm').then(({ wasm }) => wasm);
-		const extractions = files.map(async (file) => {
-			const bookName = file.name.slice(0, file.name.length - 4);
-			const allocatedFile = await allocateFileStreaming(file);
+		const module = await import('$lib/wasm').then(({ wasm }) => wasm);
+		await mountWasmFilesystem(module);
 
-			for (const entry of readArchiveEntries({ file: allocatedFile, wasm, extractData: true })) {
-				console.log(entry.file);
+		const extractions = files.map(async (file) => {
+			const bookName = file.name.substring(0, file.name.length - 4);
+			const inputArchivePath = `/archives/${bookName}`;
+			const archiveHandle = await writeFileStream(inputArchivePath, file);
+			if (!archiveHandle) {
+				throw new Error(`Unable to write archive to path: ${inputArchivePath}`);
 			}
 
-			allocatedFile.free();
-			return bookName;
+			const outputExtractionPath = `/books/${bookName}/`;
+			const extractionPath = await getPathHandle(outputExtractionPath, {
+				kind: 'directory',
+				create: true
+			});
+
+			if (!extractionPath) {
+				throw new Error(`Unable to create extraction path: ${outputExtractionPath}`);
+			}
+
+			await extractArchive({
+				wasm: module,
+				inputArchivePath,
+				outputExtractionPath
+			});
 		});
 
 		await Promise.all(extractions);
+
+		// const extractions = files.map(async (file) => {
+		// 	const bookName = file.name.slice(0, file.name.length - 4);
+		// 	const allocatedFile = await allocateFileStreaming(file);
+
+		// 	for (const entry of readArchiveEntries({
+		// 		file: allocatedFile,
+		// 		wasm: module,
+		// 		extractData: true
+		// 	})) {
+		// 		console.log(entry.file);
+		// 	}
+
+		// 	allocatedFile.free();
+		// 	return bookName;
+		// });
+
+		// await Promise.all(extractions);
 	}
 </script>
 

@@ -4,7 +4,7 @@ type ExtractArchiveParams = {
 	wasm: Awaited<typeof import('$lib/wasm').wasm>;
 	inputArchivePath: string;
 	outputExtractionPath: string;
-	onEntry: (entryName: string) => void;
+	onEntry?: (entryName: string) => void;
 };
 
 type ExctractionData = {
