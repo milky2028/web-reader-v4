@@ -108,7 +108,7 @@
 		<UnstyledButton class="arrow"><img src="/forward.svg" alt="Arrow icon" /></UnstyledButton>
 	</section>
 	<main>
-		<Title>{getTitle($page.url.pathname)}</Title>
+		<Title>{getTitle($page.url?.pathname)}</Title>
 		<Divider />
 		<slot />
 	</main>
