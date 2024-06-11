@@ -97,18 +97,21 @@
 				throw new Error(`Unable to create extraction path: ${outputExtractionPath}`);
 			}
 
-			const [coverName] = await collectEntries({
+			const entries = await collectEntries({
 				wasm: module,
 				inputArchivePath,
 				outputExtractionPath
 			});
 
+			const [coverName] = entries;
+			console.log('Cover name:', coverName);
 			await extractArchive({
 				wasm: module,
 				inputArchivePath,
 				outputExtractionPath,
 				extractData: true,
 				onEntry: async (entry) => {
+					console.log('Extracted page', entry);
 					if (user) {
 						const file = await readFileStream(`${outputExtractionPath}/${entry}`);
 						if (file) {
@@ -124,23 +127,6 @@
 		});
 
 		await Promise.all(extractions);
-
-		// const extractions = files.map(async (file) => {
-		// 	const bookName = file.name.slice(0, file.name.length - 4);
-		// 	const allocatedFile = await allocateFileStreaming(file);
-
-		// 	for (const entry of readArchiveEntries({
-		// 		file: allocatedFile,
-		// 		wasm: module,
-		// 		extractData: true
-		// 	})) {
-		// 		console.log(entry.file);
-		// 	}
-
-		// 	return bookName;
-		// });
-
-		// await Promise.all(extractions);
 	}
 </script>
 
