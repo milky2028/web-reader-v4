@@ -9,11 +9,6 @@ export type WorkerWriteResponseEvent =
 	| WorkerWriteFailureResponseEvent
 	| WorkerWriteSuccessResponseEvent;
 
-const INACTIVE_WORKER_TIMEOUT = 5_000;
-
-let worker: Worker | undefined;
-let timer = 0;
-
 /** Reduces memory pressure by writing a file or fetch response stream as it's pulled. */
 export async function writeFileStream(
 	path: string,
@@ -44,11 +39,9 @@ export async function writeFileStream(
 		// Safari does not support createWritable, so the file must be written from a Worker
 		return await new Promise<FileSystemFileHandle | undefined>((resolve) => {
 			const id = crypto.randomUUID();
-			if (!worker) {
-				worker = new Worker(new URL('./writeFileStream.worker', import.meta.url), {
-					type: 'module'
-				});
-			}
+			const worker = new Worker(new URL('./writeFileStream.worker', import.meta.url), {
+				type: 'module'
+			});
 
 			worker.addEventListener(
 				'message',
@@ -59,14 +52,10 @@ export async function writeFileStream(
 						} else {
 							resolve(undefined);
 						}
-
-						// kill worker after a period of inactivity to free up memory
-						timer = window.setTimeout(() => worker?.terminate(), INACTIVE_WORKER_TIMEOUT);
 					}
 				}
 			);
 
-			clearTimeout(timer);
 			const payload: WorkerWriteParamsEvent = { id, path, file };
 			worker.postMessage(payload);
 		});
