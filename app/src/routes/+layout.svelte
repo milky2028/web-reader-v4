@@ -46,6 +46,7 @@
 	}
 
 	progress {
+		appearance: none;
 		top: 0;
 		position: absolute;
 		width: 100vw;
@@ -53,6 +54,18 @@
 		margin: 0;
 		height: 2px;
 		border: none;
+
+		&::-webkit-progress-bar {
+			background-color: white;
+		}
+
+		&::-webkit-progress-value {
+			background-color: #1f51ff;
+		}
+
+		&::-moz-progress-bar {
+			background-color: #1f51ff;
+		}
 	}
 
 	.menu-wrapper {
