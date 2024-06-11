@@ -6,7 +6,7 @@ function isImage(type: string | undefined) {
 	return type?.startsWith('image/');
 }
 
-export const resizeImage = onObjectFinalized(async (event) => {
+export const resizeImage = onObjectFinalized({ memory: '512MiB' }, async (event) => {
 	if (isImage(event.data.contentType)) {
 		const { bucket, name: path, contentType } = event.data;
 		const [file] = await storage.bucket(bucket).file(path).download();
