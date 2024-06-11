@@ -9,6 +9,4 @@ const app = initializeApp({
 
 const bucket = getStorage(app).bucket();
 bucket.deleteFiles({ prefix: 'P1rHmhJ80KOevyB3EmxkyyEzUGj1' });
-
-// 9JSEgkf1lAULxvE8xShxILYt4n62/
-// P1rHmhJ80KOevyB3EmxkyyEzUGj1/
+bucket.deleteFiles({ prefix: '9JSEgkf1lAULxvE8xShxILYt4n62' });
