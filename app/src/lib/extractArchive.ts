@@ -5,12 +5,13 @@ type ExtractArchiveParams = {
 	inputArchivePath: string;
 	outputExtractionPath: string;
 	extractData: boolean;
-	onEntry?: (entryName: string) => void;
+	onEntry?: (entry: { name: string; size: number }) => void;
 };
 
 type ExctractionData = {
 	type: 'failure' | 'completion' | 'entry';
-	data: string;
+	name: string;
+	size: number;
 };
 
 declare global {
@@ -28,7 +29,7 @@ export function extractArchive({
 }: ExtractArchiveParams) {
 	return new Promise<void>((resolve, reject) => {
 		const jobId = crypto.randomUUID();
-		const onEvent = ({ detail: { type, data } }: CustomEvent<ExctractionData>) => {
+		const onEvent = ({ detail: { type, name, size } }: CustomEvent<ExctractionData>) => {
 			if (type === 'completion') {
 				resolve();
 			}
@@ -38,7 +39,7 @@ export function extractArchive({
 			}
 
 			if (type === 'entry') {
-				onEntry?.(data);
+				onEntry?.({ name, size });
 			}
 		};
 
