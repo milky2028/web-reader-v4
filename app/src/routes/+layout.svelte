@@ -5,6 +5,7 @@
 	import DynamicMenuArea from '$lib/dynamic-menu-area.svelte';
 	import { page } from '$app/stores';
 	import { getUser } from '$lib/firebase/user.svelte';
+	import { progress } from '$lib/progress.svelte';
 
 	const user = $derived(getUser());
 	const routes = $derived([
@@ -42,6 +43,16 @@
 				filter: invert();
 			}
 		}
+	}
+
+	progress {
+		top: 0;
+		position: absolute;
+		width: 100vw;
+		padding: 0;
+		margin: 0;
+		height: 2px;
+		border: none;
 	}
 
 	.menu-wrapper {
@@ -92,6 +103,9 @@
 </style>
 
 <section class="app-container">
+	{#if progress.max}
+		<progress value={progress.current} max={progress.max}></progress>
+	{/if}
 	<section class="menu-wrapper">
 		<a class="app-title" href="/">
 			<img src="/reader-180x180.png" alt="Comic Reader application icon" />
