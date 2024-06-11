@@ -2,7 +2,7 @@
 	"main": "lib/index.js",
 	"scripts": {
 		"start": "npm run shell",
-		"build": "rollup --config rollup.config.mjs",
+		"build": "tsc",
 		"build:watch": "tsc --watch",
 		"lint": "eslint --ext .js,.ts .",
 		"serve": "npm run build && firebase emulators:start --only functions",
