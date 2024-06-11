@@ -6,6 +6,7 @@
 	import { storage } from '$lib/firebase/storage';
 	import { getUser } from '$lib/firebase/user.svelte';
 	import { mountWasmFilesystem } from '$lib/mountWasmFilesystem';
+	import { incrementProgress, resetProgress, setMaxProgress } from '$lib/progress.svelte';
 	import { ref, uploadBytes } from 'firebase/storage';
 
 	const user = $derived(getUser());
@@ -40,7 +41,7 @@
 			inputArchivePath,
 			outputExtractionPath,
 			extractData: false,
-			onEntry: (entryName) => entries.push(entryName)
+			onEntry: ({ name }) => entries.push(name)
 		});
 		return entries.sort();
 	}
@@ -76,6 +77,7 @@
 			throw new Error('Insufficient disk space to upload file.');
 		}
 
+		setMaxProgress(totalUploadSize);
 		const module = await import('$lib/wasm').then(({ wasm }) => wasm);
 		await mountWasmFilesystem(module);
 
@@ -103,23 +105,28 @@
 				outputExtractionPath
 			});
 
-			const [coverName] = entries;
-			console.log('Cover name:', coverName);
+			const cover = entries[0];
+			const lastPage = entries.at(-1);
 			await extractArchive({
 				wasm: module,
 				inputArchivePath,
 				outputExtractionPath,
 				extractData: true,
-				onEntry: async (entry) => {
-					console.log('Extracted page', entry);
+				onEntry: async ({ name, size }) => {
+					console.log('Extracted page', name, size);
 					if (user) {
-						const file = await readFileStream(`${outputExtractionPath}/${entry}`);
+						const file = await readFileStream(`${outputExtractionPath}/${name}`);
 						if (file) {
-							await uploadBytes(ref(storage, `${user.uid}/${bookName}/${entry}`), file);
+							await uploadBytes(ref(storage, `${user.uid}/${bookName}/${name}`), file);
+							if (name === lastPage) {
+								resetProgress();
+							} else {
+								incrementProgress(size);
+							}
 						}
 					}
 
-					if (entry === coverName) {
+					if (name === cover) {
 						console.log('Cover found');
 					}
 				}
