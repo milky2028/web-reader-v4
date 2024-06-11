@@ -15,6 +15,6 @@ export const resizeImage = onObjectFinalized({ memory: '2GiB', cpu: 4 }, async (
 		await storage
 			.bucket(event.data.bucket)
 			.file(path)
-			.save(optimizedBuffer, { metadata: { contentType, customMetadata: { resized: true } } });
+			.save(optimizedBuffer, { metadata: { contentType } });
 	}
 });
