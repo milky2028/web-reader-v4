@@ -179,13 +179,13 @@
 </style>
 
 <div class="container">
-	<div role="button" tabindex="0" class="drop-zone" on:dragover={onDragover}>
+	<div role="button" tabindex="0" class="drop-zone" ondragover={onDragover}>
 		<div class="drag-message-container"><h2>Drag and drop or click to upload a book</h2></div>
 		<input
 			type="file"
 			accept={acceptedFileTypes.join()}
 			multiple
-			on:change={(event) => upload(getFiles(event))}
+			onchange={(event) => upload(getFiles(event))}
 		/>
 	</div>
 </div>
