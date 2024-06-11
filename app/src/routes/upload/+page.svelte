@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { extractArchive } from '$lib/extractArchive';
+	import { deletePath } from '$lib/file-streams/deletePath';
 	import { getPathHandle } from '$lib/file-streams/getPathHandle';
 	import { readFileStream } from '$lib/file-streams/readFileStream';
 	import { writeFileStream } from '$lib/file-streams/writeFileStream';
@@ -131,6 +132,8 @@
 					}
 				}
 			});
+
+			deletePath(inputArchivePath);
 		});
 
 		await Promise.all(extractions);
