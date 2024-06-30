@@ -6,6 +6,8 @@
 	import { page } from '$app/stores';
 	import { getUser } from '$lib/firebase/user.svelte';
 	import { progress } from '$lib/progress.svelte';
+	import { books } from '$lib/books.svelte';
+	import { writeJSONFile } from '$lib/file-streams/writeJSONFile';
 
 	const user = $derived(getUser());
 	const routes = $derived([
@@ -22,6 +24,10 @@
 			href: '/login'
 		}
 	]);
+
+	$effect(() => {
+		writeJSONFile(`/books.json`, books.entries());
+	});
 
 	function getTitle(href: string) {
 		return routes.find((page) => page.href === href)?.name;

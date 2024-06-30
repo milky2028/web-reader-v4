@@ -1,22 +1,24 @@
-import { writeJSONFile } from './file-streams/writeJSONFile';
-
-type Page = {
-	name: string;
-	extracted: boolean;
-	syncedToCloud: boolean;
+const pageBase = {
+	name: '',
+	extracted: false,
+	syncedToCloud: false
 };
 
-type Book = {
-	cover: string;
-	fullySyncedToCloud: string;
-	lastReadPage: number;
-	fullyExtracted: boolean;
-	pages: Map<string, Page>;
+const bookBase = {
+	name: '',
+	cover: '',
+	lastExtractedPage: 0,
+	lastPageSyncedToCloud: 0,
+	lastReadPage: 0,
+	pages: new Map<string, Page>()
 };
+
+export type Book = typeof bookBase;
+export type Page = typeof pageBase;
 
 export const books = $state(new Map<string, Book>());
-export const updateBook = (name: string, book: Book) => books.set(name, book);
+export const updateBook = (name: string, book: Partial<Book>) =>
+	books.set(name, { ...bookBase, ...book });
 
-$effect(() => {
-	writeJSONFile(`/books.json`, books.entries());
-});
+export const updatePage = (bookName: string, pageName: string, page: Partial<Page>) =>
+	books.get(bookName)?.pages.set(pageName, { ...pageBase, ...page });
