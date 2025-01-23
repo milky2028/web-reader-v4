@@ -20,7 +20,7 @@ export async function deletePath(
 
 		await handle.removeEntry(childPath, { recursive });
 		return true;
-	} catch (error) {
+	} catch {
 		return false;
 	}
 }

@@ -13,7 +13,7 @@ export async function writeJSONFile<T = unknown>(
 		}
 
 		return undefined;
-	} catch (error) {
+	} catch {
 		return undefined;
 	}
 }

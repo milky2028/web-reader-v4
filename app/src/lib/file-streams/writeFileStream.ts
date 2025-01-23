@@ -59,7 +59,7 @@ export async function writeFileStream(
 			const payload: WorkerWriteParamsEvent = { id, path, file };
 			worker.postMessage(payload);
 		});
-	} catch (error) {
+	} catch {
 		deletePath(path);
 		return undefined;
 	}

@@ -13,7 +13,7 @@ export function getParentAndChildPaths(path: string): {
 		}
 
 		return { parentPath: `/${segments.slice(0, -1).join('/')}`, childPath: segments.pop() };
-	} catch (error) {
+	} catch {
 		return { parentPath: undefined, childPath: undefined };
 	}
 }

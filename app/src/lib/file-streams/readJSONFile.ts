@@ -9,7 +9,7 @@ export async function readJSONFile<T = unknown>(path: string): Promise<T | undef
 		}
 
 		return undefined;
-	} catch (e) {
+	} catch {
 		return undefined;
 	}
 }

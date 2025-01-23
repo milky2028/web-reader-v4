@@ -43,7 +43,6 @@ export async function getPathHandle(
 		}
 
 		for (const segment of segments) {
-			// eslint-disable-next-line no-await-in-loop
 			directory = await directory.getDirectoryHandle(segment, { create });
 		}
 
