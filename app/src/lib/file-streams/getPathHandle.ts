@@ -48,7 +48,7 @@ export async function getPathHandle(
 		}
 
 		return kind === 'directory' ? directory : await directory.getFileHandle(fileName, { create });
-	} catch (error) {
+	} catch {
 		return undefined;
 	}
 }
