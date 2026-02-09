@@ -33,7 +33,7 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"extract-zip-rar": "^0.14.0",
+		"extract-zip-rar": "link:/Users/tgross/Documents/GitHub/extract",
 		"firebase": "^10.12.2"
 	}
 }
